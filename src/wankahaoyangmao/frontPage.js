@@ -26,14 +26,34 @@ async function spideHtml(url){
     let list = $("#js_content").children();
     console.log(list.length);
 
-    let len = list.length;
-    // for(let i = 0; i<len; i++){
-
+    let len = list.length -5;//开头4个，结尾5个不考虑
+    // for(let i = 4; i<len; i++){
+    //         if($($(list[5]).children()).children().length > 1){
+    //              let items = $($(list[5]).children()).children();
+    //              let title = $(items[0]).text()
+    //         }else{//这个是标题：0点活动
+    //
+    //         }
     // }
 
+    let items = $($(list[5]).children()).children()
+    let itemL = items.length;
+    let itemB = $(items[itemL-1]).children();//第一层section
+    let itemBL = itemB.length;
+    let itemC = itemB[itemBL-1]         //第二层section
+    let itemArr = $(itemC).children();
 
+    for(let j = 0; j<itemArr.length;j++){
+        console.log($(itemArr[j]).text());
+        if(j == itemArr.length-1){
 
-    console.log($($(list[5]).children()).children().length);
+        }
+
+    }
+
+    console.log($(items[0]).text());
+
+    // console.log($($(list[5]).children()).children().length);
 
 
 }
