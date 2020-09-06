@@ -1,6 +1,8 @@
 const cheerio = require("cheerio");
 const download = require("../lib/download").download;
 const Spider = require("../lib/spiderD");
+var fs = require('fs');
+const tool = require("../util/tool")
 
 // const detail = require("./detailPage");
 const config = require("../config");
@@ -12,7 +14,10 @@ let startUrl = config.wankahaoyangmao;
 
 // let dataInfo = [], lastDate = new Date(lastDay).valueOf();
 
-async function main(){
+let jsonFile = 'json'
+
+async function getFrontPageJson(fileName){
+    jsonFile = fileName;
     await spideHtml(startUrl);
 }
 
@@ -26,14 +31,23 @@ async function spideHtml(url){
     let list = $("#js_content").children();
     console.log(list.length);
 
-    let dataArr = []
+    let dataArr = [], bankUrlArr =[];
 
-    let len = list.length -5;//开头4个，结尾5个不考虑
+    let len = list.length -6;//开头4个，结尾5个不考虑
     for(let i = 4; i<len; i++){
         let dataObj = {}
         if($($(list[i]).children()).children().length > 1){
+
             let items = $($(list[i]).children()).children();
             let title = $(items[0]).text()//TT 标题
+
+            //TODO 前期收集银行图片
+            let bankUrl = $(items[0]).find("img").attr("data-src")
+            console.log(">>> bankUrl:" + bankUrl);
+            if(bankUrl){
+                bankUrlArr.push(bankUrl);
+            }
+            
 
             let itemL = items.length;
             let itemB = $(items[itemL-1]).children();//第一层section
@@ -110,27 +124,40 @@ async function spideHtml(url){
         dataArr.push(dataObj)
     }
 
-    console.log(dataArr);
 
-    // let items = $($(list[5]).children()).children()
-    // let itemL = items.length;
-    // let itemB = $(items[itemL-1]).children();//第一层section
-    // let itemBL = itemB.length;
-    // let itemC = itemB[itemBL-1]         //第二层section
-    // let itemArr = $(itemC).children();
+    let block = $($($(list[list.length-4]).children()[0]).children()[0]).children()[0]
 
-    // for(let j = 0; j<itemArr.length;j++){
-    //     console.log($(itemArr[j]).text());
-    //     if(j == itemArr.length-1){
-    //         console.log($(itemArr[j]).find("a").attr("href"))
-    //     }
+    let pArr = $(block).children()
 
+    let title = ""
+    for(let a = 0; a<pArr.length-2;a++){
+        let text = $(pArr[a]).text();
+        if(text.indexOf("细则") >=0){
+            let obj = {};
+            obj.description = [];
+            obj.title = title;
+            let detail = text.split("🔍")[0];
+            obj.description.push(detail);
+            
+            obj.detailUrl = $(pArr[a]).find('a').attr("href");
+            dataArr.push(obj);
+        }else{
+            title = text;
+        }
+    }
+
+
+    //初始数据存文件
+    fs.writeFileSync(jsonFile,JSON.stringify(dataArr),"utf8")
+
+    //下载银行icon
+    // let newNameArr = []
+    // for(let i =0; i<bankUrlArr.length; i++){
+    //     let name = tool.guid() + ".png";
+    //     newNameArr.push(name);
     // }
 
-    // console.log($(items[0]).text());
-
-    // console.log($($(list[5]).children()).children().length);
-
-
 }
-main();
+// getFrontPageJson("tt.json");
+
+module.exports = getFrontPageJson;
