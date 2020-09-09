@@ -43,7 +43,7 @@ async function spideHtml(url){
 
             //TODO 前期收集银行图片
             let bankUrl = $(items[0]).find("img").attr("data-src")
-            console.log(">>> bankUrl:" + bankUrl);
+            // console.log(">>> bankUrl:" + bankUrl);
             if(bankUrl){
                 bankUrlArr.push(bankUrl);
             }
@@ -71,9 +71,9 @@ async function spideHtml(url){
                     let date = lastData.split("（")[1].split("截止")[0];
                     if(date){
                         let tmpStr = config.year + "-" + date.replace("月","-").replace("日"," 00:00:00");
-                        console.log("title:: " + title);
-                        console.log("date:: " + date);
-                        console.log("tmpStr: " + tmpStr);
+                        // console.log("title:: " + title);
+                        // console.log("date:: " + date);
+                        // console.log("tmpStr: " + tmpStr);
                         time = new Date(tmpStr).valueOf();  //TT 时间戳
                     }
                     

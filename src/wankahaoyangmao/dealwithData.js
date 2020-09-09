@@ -1,7 +1,7 @@
 var fs = require('fs');
 const { isRegExp } = require('util');
-
-
+const config = require("../config.js")
+const {guid} = require("../util/tool.js")
 
 let bankArr = JSON.parse(fs.readFileSync("../data/bank.json",'utf8'));
 let strucData = JSON.parse(fs.readFileSync("../data/dataAl.json",'utf8'));
@@ -18,6 +18,10 @@ async function dealWithDate(){
     for(let i = 0; i<dataLen; i++){
         let len = Object.keys(dataArr[i]).length
 
+		dataArr[i]["inputDate"] = config.date;
+		let id = guid();
+		// console.log("id::  " + id);
+		dataArr[i]["ID"] = id;
         if(len > 0){
             let hasBank = false;
             for(let j = 0; j<bankLen; j++){
