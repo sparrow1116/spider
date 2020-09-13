@@ -18,7 +18,7 @@ let jsonFile = 'json'
 
 async function getFrontPageJson(fileName){
     jsonFile = fileName;
-    await spideHtml(startUrl);
+    return await spideHtml(startUrl);
 }
 
 async function spideHtml(url){
@@ -146,9 +146,12 @@ async function spideHtml(url){
         }
     }
 
+    
 
     //初始数据存文件
     fs.writeFileSync(jsonFile,JSON.stringify(dataArr),"utf8")
+
+    return dataArr;
 
     //下载银行icon
     // let newNameArr = []

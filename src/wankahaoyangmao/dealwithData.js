@@ -21,7 +21,7 @@ async function dealWithDate(){
 		dataArr[i]["inputDate"] = config.date;
 		let id = guid();
 		// console.log("id::  " + id);
-		dataArr[i]["ID"] = id;
+		dataArr[i]["myId"] = id;
         if(len > 0){
             let hasBank = false;
             for(let j = 0; j<bankLen; j++){
@@ -89,6 +89,8 @@ async function dealWithDate(){
             console.log(newDataArr[i]);
         }
     }
+
+    return newDataArr;
 }
 
 
