@@ -1,6 +1,6 @@
 const cheerio = require("cheerio");
 const Spider = require("../lib/spiderD");
-const download = require("../lib/download").download;
+const download = require("../lib/selfDownload").download;
 const tool = require("../util/tool")
 const fs = require('fs')
 
@@ -22,7 +22,7 @@ function findOriginUrl(str){
             }
             start++
         }
-        return str.substr(first+1,second-first)
+        return str.substr(first+1,second-first-1)
 
 }
 
@@ -31,7 +31,7 @@ async function getDetailPage(data){
     let detailArr = [];
     for(let i = 0; i<data.length; i++){
         if(data[i].detailUrl){
-            // console.log("come in");
+            console.log("come in " + i);
             let sp = new Spider();
             // console.log(data[i].detailUrl)
             let url = data[i].detailUrl.replace('http','https').split('#wechat_redirect')[0];//跳转了。
@@ -89,10 +89,23 @@ async function getDetailPage(data){
 
     console.log('all pic Arr>>>  ' + picAddressArr.length)
 
-    download(picAddressArr,'detailPic',picNameArr)
-        .then(()=>{
-            console.log('finisht')
-        })
+    let in50 = true;
+    while(in50){
+        if(picAddressArr.length > 50){
+            let front50Aderess = picAddressArr.splice(0,50);
+            let front50Name = picNameArr.splice(0,50);
+            let result = await download(front50Aderess,'detailPic',front50Name)
+            console.log(result)
+        }else{
+            let result = await download(picAddressArr,'detailPic',picNameArr)
+            in50 = false
+            console.log(result)
+        }
+    }
+    // download(picAddressArr,'detailPic',picNameArr)
+    //     .then((result)=>{
+    //         console.log('finisht result:: ' + result)
+    //     })
 
 
 

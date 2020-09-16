@@ -11,11 +11,13 @@ function isFileExisted(path_way) {
             if (err) {
                 fs.mkdir(path_way, (err) => {
                     if (err) {
+                        rej(false)
                         return console.log('该文件不存在，重新创建失败！')
                     }
                     console.log("文件不存在，已新创建");
+                    resolve(true)
                 });
-                reject(false);
+                // reject(false);
             } else {
                 resolve(true);
             }
@@ -26,34 +28,46 @@ function isFileExisted(path_way) {
 //     .then((a)=>{
 //         console.log('fuck')
 //     })
-function downLoad(urlList,dest,newNameList){
-
+async function download(urlList,dest,newNameList){
+    let destPath = dest?dest:"dest"; 
+    await isFileExisted(destPath)
+    let pAll = []
+    for(let i = 0; i<urlList.length;i++){
+        let p = downloadOne(urlList[i],destPath,newNameList?newNameList[i]:'')
+        pAll.push(p);
+    }
+    return Promise.all(pAll)
 }
 
-function downLoadOne(url,dest,newName){
-    return new Promise( (res,rej)=>{
-        isFileExisted(dest)
-            .then(()=>{
-                console.log('shit')
-            })
-        // var writeStream = fs.createWriteStream(dest + newName);
-        // var readStream = request(url)
-        // readStream.pipe(writeStream);
-        // readStream.on('end', function() {
-        //     console.log('文件下载成功');
-        // });
-        // readStream.on('error', function() {
-        //     console.log("错误信息:" + err)
-        // })
-        // writeStream.on("finish", function() {
-        //     console.log("文件写入成功");
-        //     writeStream.end();
-        // });
+function downloadOne(url,dest,newName){
+    if(!newName){
+        let a = url.split('/')
+        newName = a[a.length-1]
+    }
+    return new Promise( async(res,rej)=>{
+        var writeStream = fs.createWriteStream(dest +'/' + newName);
+        var readStream = request({url,timeout:2000})
+        readStream.pipe(writeStream);
+        readStream.on('end', function() {
+            // console.log('文件下载成功');
+        });
+        readStream.on('error', function(err) {
+            rej(false)
+            console.log('error url:  ' + url)
+            console.log("错误信息:" + err)
+        })
+        writeStream.on("finish", function() {
+            // console.log("文件写入成功");
+            writeStream.end();
+            res(true);
+        });
 
         // request(url).pipe(fs.createWriteStream(dest+newName))
     })
 }
 
 
-downLoadOne('https://aecpm.alicdn.com/simba/img/TB1X6uHLVXXXXcCXVXXSutbFXXX.jpg','xx','/me.png')
+module.exports = {download}
+
+// downLoadOne('https://aecpm.alicdn.com/simba/img/TB1X6uHLVXXXXcCXVXXSutbFXXX.jpg','xx','/me.png')
 
