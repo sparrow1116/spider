@@ -17,6 +17,7 @@
     "download": "^8.0.0",
     "http": "0.0.1-security",
     "https": "^1.0.0",
-    "node-fetch": "^2.6.1"
+    "node-fetch": "^2.6.1",
+    "request": "^2.88.2"
   }
 }

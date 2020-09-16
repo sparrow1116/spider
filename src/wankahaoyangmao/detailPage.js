@@ -23,7 +23,7 @@ function findOriginUrl(str){
             start++
         }
         return str.substr(first+1,second-first)
-    
+
 }
 
 
@@ -31,7 +31,7 @@ async function getDetailPage(data){
     let detailArr = [];
     for(let i = 0; i<data.length; i++){
         if(data[i].detailUrl){
-            console.log("come in");
+            // console.log("come in");
             let sp = new Spider();
             // console.log(data[i].detailUrl)
             let url = data[i].detailUrl.replace('http','https').split('#wechat_redirect')[0];//跳转了。
@@ -49,13 +49,13 @@ async function getDetailPage(data){
             };
 	    storeData.title = $('#activity-name').text().trim();
             let textDArr = $(container).find('fieldset p');
-            // console.log(textDArr.length) 
+            // console.log(textDArr.length)
             for(let j = 0; j<textDArr.length;j++){
                 // console.log($(textDArr[j]).text());
                 storeData.despArr.push($(textDArr[j]).text())
             }
             let imgDomArr = $(container).find('img');
-            console.log(imgDomArr.length)
+            // console.log(imgDomArr.length)
             for(let j= 0; j<imgDomArr.length ;j++){ //最后2个为logo
                 if(j == imgDomArr.length - 1 || imgDomArr.length - 2){
                     let url = $(imgDomArr[j]).attr('data-src')
@@ -77,7 +77,7 @@ async function getDetailPage(data){
 
     let picNameArr = [],picAddressArr = []
     for(let i =0; i<detailArr.length; i++){
-        
+
         detailArr[i].picArr.map((item,index)=>{
             let uuid = tool.guid()
             picAddressArr.push(detailArr[i].picArr[index]);
@@ -93,10 +93,10 @@ async function getDetailPage(data){
         .then(()=>{
             console.log('finisht')
         })
-    
-    
 
-} 
+
+
+}
 
 // let dd = [{
 //     "title": "京东（爱奇艺+京东年卡）",
