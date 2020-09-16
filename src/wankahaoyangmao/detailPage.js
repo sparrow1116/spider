@@ -41,12 +41,13 @@ async function getDetailPage(data){
             let $ = cheerio.load(htmlStr);
             let container = $("#js_content");
             let storeData = {
+                title:'',
                 myId:data[i].myId,
                 orignalUrl,
                 despArr:[],
                 picArr:[]
             };
-            
+	    storeData.title = $('#activity-name').text().trim();
             let textDArr = $(container).find('fieldset p');
             // console.log(textDArr.length) 
             for(let j = 0; j<textDArr.length;j++){
