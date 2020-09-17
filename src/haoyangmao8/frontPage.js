@@ -2,14 +2,11 @@
  * Created by zyj on 2020/8/11.
  */
 const cheerio = require("cheerio");
-// const download = require("download");
 const fs = require('fs')
-
-// const download = require("../lib/selfDownload").download;
 const {downArr} = require('./download')
 const Spider = require("../lib/spiderD");
 
-const detail = require("./detailPage");
+
 const config = require("../config");
 
 const {guid} = require('../util/tool')
@@ -24,18 +21,18 @@ let dataInfo = [], lastDate = new Date(lastDay).valueOf();
 async function main(){
     let dataList = await spiderHtml(startUrl);
     let newList = [];
-    console.log(lastDate);
+    // console.log(lastDate);
     for(let i = 0; i<dataList.length; i++){
-        console.log(dataList[i].time)
+        // console.log(dataList[i].time)
         if(dataList[i].time >= lastDate){
             newList.push(dataList[i])
         }
     }
     fs.writeFileSync('list.json',JSON.stringify(newList),"utf8")
-
+    console.log('这次爬取了：' + newList.length + '条数据')
     // await spiderDetail();
 
-    console.log(newList);
+    return newList
 }
 
 
@@ -96,9 +93,9 @@ async function spiderHtml(url){
             dataInfo.push(data);
             
         }
+        console.log('列表页需要下载：' + imgArr.length + '张图片')
     // 下载缩略图
     await downArr(imgArr,'dest',nameArr)
-    console.log(1)
     //最后一条是否在我们搜索的时期后。
     if(dataInfo[dataInfo.length -1].time >= lastDate){
         
@@ -123,7 +120,6 @@ async function spiderHtml(url){
         }
         
     }
-    console.log(2)
     return dataInfo
 
 }
