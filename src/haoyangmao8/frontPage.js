@@ -3,42 +3,53 @@
  */
 const cheerio = require("cheerio");
 // const download = require("download");
+const fs = require('fs')
 
-const download = require("../lib/download").download;
+// const download = require("../lib/selfDownload").download;
+const {downArr} = require('./download')
 const Spider = require("../lib/spiderD");
 
 const detail = require("./detailPage");
 const config = require("../config");
 
+const {guid} = require('../util/tool')
 
 let startUrl = config.haoyangmao8Url;
-
-const lastDay = config.haoyangmao8Url;
-
+const lastDay = config.haoyangmao8Date;
 let dataInfo = [], lastDate = new Date(lastDay).valueOf();
 
 
 // main();
 
 async function main(){
-    await spiderHtml(startUrl);
-    await spiderDetail();
-
-    console.log(dataInfo[0]);
-}
-
-
-async function spiderDetail(){
-    for(let i = 0; i<dataInfo.length; i++){
-        if(dataInfo[i].time >= lastDate){
-        
-            let dd = await detail(dataInfo[i].detailUrl);
-            // console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-            // console.log(dd);
-            dataInfo[i].detail = dd;
+    let dataList = await spiderHtml(startUrl);
+    let newList = [];
+    console.log(lastDate);
+    for(let i = 0; i<dataList.length; i++){
+        console.log(dataList[i].time)
+        if(dataList[i].time >= lastDate){
+            newList.push(dataList[i])
         }
     }
+    fs.writeFileSync('list.json',JSON.stringify(newList),"utf8")
+
+    // await spiderDetail();
+
+    console.log(newList);
 }
+
+
+// async function spiderDetail(){
+//     for(let i = 0; i<dataInfo.length; i++){
+//         if(dataInfo[i].time >= lastDate){
+        
+//             let dd = await detail(dataInfo[i].detailUrl);
+//             // console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+//             // console.log(dd);
+//             dataInfo[i].detail = dd;
+//         }
+//     }
+// }
 
 // if()
 
@@ -55,7 +66,7 @@ async function spiderHtml(url){
         let listObj = $(".list .firstreed");
 
 
-        let imgArr = []; 
+        let imgArr = [], nameArr = [];
         for(let i = 0; i<listObj.length;i++){
             let data = {};
             //标题
@@ -67,25 +78,27 @@ async function spiderHtml(url){
             let tmpStr = timeStr.replace("年","-").replace("月","-").replace("日"," 00:00:00");
             let time = new Date(tmpStr).valueOf();
             data.time = time;
-            console.log(">>>time>>::" + tmpStr);
+            // console.log(">>>time>>::" + tmpStr);
             //缩略图
             let img = $(listObj[i]).find("#zhaiyaotu img").attr("data-cfsrc");
-            let imgNameArr = img.split("/");
-            let imgName = imgNameArr[imgNameArr.length-1];
+            let guidName = guid()+ '.png'
             imgArr.push(img);
-            data.img = imgName;
-            console.log(">>>imgName::" + imgName);
+            nameArr.push(guidName)
+            data.img = guidName;
+           
+            data.myId = guid();
 
             //详情页面链接
             let detailUrl = $(listObj[i]).find(".read-more a").attr("href")
-            console.log("url::>>>  " + detailUrl);
+            // console.log("url::>>>  " + detailUrl);
             data.detailUrl = detailUrl;
-
+           
             dataInfo.push(data);
+            
         }
     // 下载缩略图
-    await download(imgArr).then(()=>{console.log("download ok");});
-
+    await downArr(imgArr,'dest',nameArr)
+    console.log(1)
     //最后一条是否在我们搜索的时期后。
     if(dataInfo[dataInfo.length -1].time >= lastDate){
         
@@ -110,6 +123,8 @@ async function spiderHtml(url){
         }
         
     }
+    console.log(2)
+    return dataInfo
 
 }
 module.exports = main;

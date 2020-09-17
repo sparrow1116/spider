@@ -46,7 +46,9 @@ function downloadOne(url,dest,newName){
     }
     return new Promise( async(res,rej)=>{
         var writeStream = fs.createWriteStream(dest +'/' + newName);
-        var readStream = request({url,timeout:2000})
+        Picreferer = {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36',                       
+            'Referer':'https://www.haoyangmao8.com/'}
+        var readStream = request({url,timeout:2000,Picreferer})
         readStream.pipe(writeStream);
         readStream.on('end', function() {
             // console.log('文件下载成功');
