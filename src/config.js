@@ -7,7 +7,7 @@ const conf = {
 	date:"2020-09-09",
     wankahaoyangmao:"https://mp.weixin.qq.com/s/WiqciKUsRGiHVsZbnHn2OQ",
 
-    yangmaoduoData:"2020-09-14",
+    yangmaoduoData:"2020-09-18 00:00:00",
     yangmaodaoUrl: 'https://www.yangmaoduo.com/'
     
 }
