@@ -81,7 +81,7 @@ async function spiderHtml(url){
             let guidName = guid()+ '.png'
             imgArr.push(img);
             nameArr.push(guidName)
-            data.img = guidName;
+            data.headImg = guidName;
            
             data.myId = guid();
 

@@ -51,7 +51,7 @@ async function spiderHtml(url){
             title:'',
             level: 0,
             detailUrl:'',
-            fontImg:'',
+            headImg:'',
             desciption:'',
             time:0,
             tags:[]
@@ -75,7 +75,7 @@ async function spiderHtml(url){
         let guidName = guid()+ '.png'
         imgArr.push(img);
         nameArr.push(guidName)
-        obj.fontImg = guidName;
+        obj.headImg = guidName;
            
 
         obj.desciption = $($(dd).children()[1]).text()

@@ -1,21 +1,34 @@
-const conf = {
-	serverUrl:"http://localhost:3000",
-    year:"2020",
-    haoyangmao8Url:"https://www.haoyangmao8.com/",
-    haoyangmao8Date:"2020-09-14 00:00:00",
-    
-	date:"2020-09-09",
-    wankahaoyangmao:"https://mp.weixin.qq.com/s/WiqciKUsRGiHVsZbnHn2OQ",
 
-    yangmaoduoData:"2020-09-17 00:00:00",
+let first_four = {
+    date: '2020-09-19 00:00:00',
+    year: '2020'
+};
+
+
+const conf = {
+    serverUrl:"http://localhost:3000",
+    
+
+    year: first_four.year,
+    haoyangmao8Date: first_four.date,
+    haoyangmao8Url:"https://www.haoyangmao8.com/",
+    
+    yangmaoduoData:first_four.date,
     yangmaodaoUrl: 'https://www.yangmaoduo.com/',
 
-    aihaoyangmaoDate: '2020-09-17 00:00:00',
+    aihaoyangmaoDate: first_four.date,
     aihaoyangmaoUrl:'https://www.lhaoyangmao.com/',
 
+    jiuaiyangmaoDate: first_four.date,
+    jiuaiyangmaoYear: first_four.year,
     jiuaiyangmaoUrl:'https://www.92ymw.com/',
-    jiuaiyangmaoDate: '2020-09-11 00:00:00',
-    jiuaiyangmaoYear: '2020'
+
+    butaoluYear: first_four.year,
+    butaoluDate: first_four.date,
+    butaoluUrl:'https://butaolu.com/',
+
+    date:"2020-09-09",
+    wankahaoyangmao:"https://mp.weixin.qq.com/s/WiqciKUsRGiHVsZbnHn2OQ"
     
 }
 

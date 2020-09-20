@@ -8,6 +8,9 @@ async function main(){
 
     let dataArr = JSON.parse(fs.readFileSync("./list.json",'utf8'));
 
-    spiderDetail(dataArr)
+    await spiderDetail(dataArr)
 } 
-main();
+
+// main();
+
+module.exports = main

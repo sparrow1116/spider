@@ -44,7 +44,7 @@ async function spideHtml(data){
     // console.log(detailArr);
     // download(imgArr).then(()=>{console.log("download ok");})
     console.log('这条详情下载：' + imgArr.length + ' 张图片')
-    await downArr(imgArr,'dest',imgNameArr)
+    await downArr(imgArr,'detailPic',imgNameArr)
     return detailObj;
     
 }

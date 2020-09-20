@@ -11,4 +11,5 @@ async function main(){
     await spiderDetail(dataArr)
 } 
 // main();
+
 module.exports = main
