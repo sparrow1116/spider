@@ -13,13 +13,13 @@ const BaseUrl = require('../config').serverUrl
 //     commercial: '京东'
 //   }
 
-fetch(BaseUrl+'/api/getDataList',{
+fetch(BaseUrl+'/api/fourweborginal/detailItem',{
     method: "POST",
     credentials: 'include',
     headers: {
         "Content-Type": "application/json",
     },
-    body: JSON.stringify({date:'2020-09-09'})
+    body: JSON.stringify({myId:'43b24024-31a2-4387-88fb-f12bd969e78c'})
     
 }).then(function(response) {
     console.log('back')
