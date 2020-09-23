@@ -58,7 +58,7 @@ async function spiderDetail(dataArr){
         detailArr.push(detailData)
     }
     // console.log('detailArr')
-    fs.writeFileSync('detailArr.json',JSON.stringify(detailArr),"utf8")
+    fs.writeFileSync('./haoyangmao8/detailArr.json',JSON.stringify(detailArr),"utf8")
 }
 
 module.exports = spiderDetail

@@ -79,7 +79,7 @@ async function spiderDetail(dataArr){
         let detailData = await spideHtml(dataArr[i])
         detailArr.push(detailData)
     }
-    fs.writeFileSync('detailArr.json',JSON.stringify(detailArr),"utf8")
+    fs.writeFileSync('./yangmaoduo/detailArr.json',JSON.stringify(detailArr),"utf8")
 }
 
 module.exports = spiderDetail

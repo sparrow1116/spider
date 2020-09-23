@@ -6,7 +6,7 @@ const fs = require('fs')
 async function main(){
     let listData = await haoyangmao8();
 
-    let dataArr = JSON.parse(fs.readFileSync("./list.json",'utf8'));
+    let dataArr = JSON.parse(fs.readFileSync("./haoyangmao8/list.json",'utf8'));
 
     await spiderDetail(dataArr)
 } 

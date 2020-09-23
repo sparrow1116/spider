@@ -28,7 +28,7 @@ async function main(){
             newList.push(dataList[i])
         }
     }
-    fs.writeFileSync('list.json',JSON.stringify(newList),"utf8")
+    fs.writeFileSync('./haoyangmao8/list.json',JSON.stringify(newList),"utf8")
     console.log('这次爬取了：' + newList.length + '条数据')
     // await spiderDetail();
 
