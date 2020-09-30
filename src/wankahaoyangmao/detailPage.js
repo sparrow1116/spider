@@ -33,7 +33,7 @@ async function getDetailPage(data){
         if(data[i].detailUrl){
             console.log("come in " + i);
             let sp = new Spider();
-            // console.log(data[i].detailUrl)
+            console.log(data[i].detailUrl)
             let url = data[i].detailUrl.replace('http','https').split('#wechat_redirect')[0];//跳转了。
             let htmlStr = await sp.getHtml(url);
             let orignalUrl = findOriginUrl(htmlStr)
@@ -88,17 +88,17 @@ async function getDetailPage(data){
     fs.writeFileSync('detailArr.json',JSON.stringify(detailArr),"utf8")
 
     console.log('all pic Arr>>>  ' + picAddressArr.length)
-
-    let in50 = true;
-    while(in50){
-        if(picAddressArr.length > 50){
-            let front50Aderess = picAddressArr.splice(0,50);
-            let front50Name = picNameArr.splice(0,50);
-            let result = await download(front50Aderess,'detailPic',front50Name)
+    fs.writeFileSync('pictureAddress.json',JSON.stringify(picAddressArr),"utf8")
+    let in10 = true;
+    while(in10){
+        if(picAddressArr.length > 10){
+            let front10Aderess = picAddressArr.splice(0,10);
+            let front10Name = picNameArr.splice(0,10);
+            let result = await download(front10Aderess,'detailPic',front10Name)
             console.log(result)
         }else{
             let result = await download(picAddressArr,'detailPic',picNameArr)
-            in50 = false
+            in10 = false
             console.log(result)
         }
     }

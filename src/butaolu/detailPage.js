@@ -37,6 +37,9 @@ async function spideHtml(data){
                 obj.type = 'text'
                 obj.data = $(listObj[i]).text()
             }
+        }else if(listObj[i].tagName === 'div'){
+            obj.type = 'text'
+            obj.data = $(listObj[i]).text()
         }
         detailObj.contentArr.push(obj);
     }

@@ -29,7 +29,7 @@ async function spideHtml(url){
 
     let $ = cheerio.load(htmlStr);
     let list = $("#js_content").children();
-    console.log(list.length);
+    // console.log(list.length);
 
     let dataArr = [], bankUrlArr =[];
 
@@ -147,7 +147,7 @@ async function spideHtml(url){
     }
 
     
-
+    console.log('今天共抓取了' + dataArr.length + '条数据')
     //初始数据存文件
     fs.writeFileSync(jsonFile,JSON.stringify(dataArr),"utf8")
 

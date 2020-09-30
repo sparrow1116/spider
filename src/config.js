@@ -27,8 +27,8 @@ const conf = {
     butaoluDate: first_four.date,
     butaoluUrl:'https://butaolu.com/',
 
-    date:"2020-09-09",
-    wankahaoyangmao:"https://mp.weixin.qq.com/s/WiqciKUsRGiHVsZbnHn2OQ"
+    date:"2020-09-30",
+    wankahaoyangmao:"https://mp.weixin.qq.com/s/L6dMTkiQoBass4DlMMlLLw"
     
 }
 
