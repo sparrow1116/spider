@@ -1,12 +1,13 @@
 
 let first_four = {
-    date: '2020-09-19 00:00:00',
+    date: '2020-10-01 00:00:00',
     year: '2020'
 };
 
+const isServer = true;
 
 const conf = {
-    serverUrl:"http://localhost:3000",
+    serverUrl:isServer? "http://47.103.124.76:3000" : "http://localhost:3000",
     
 
     year: first_four.year,

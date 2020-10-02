@@ -19,6 +19,10 @@ let data = butaolu.concat(haoyangmao8,jiuaiyangmao,yangmaoduo)
 
 data = JSON.stringify(data)
 
+console.log('pushData:::')
+// console.log(data)
+
+console.log("baseUrl  " + BaseUrl)
 fetch(BaseUrl+'/api/fourweborginal/saveWebList',{
     method: "POST",
     credentials: 'include',
